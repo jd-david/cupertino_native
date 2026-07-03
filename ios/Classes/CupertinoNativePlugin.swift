@@ -103,12 +103,32 @@ public class CupertinoNativePlugin: NSObject, FlutterPlugin {
       }
     }
 
-    guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
+    var rootViewController: UIViewController? = nil
+    if #available(iOS 13.0, *) {
+        for scene in UIApplication.shared.connectedScenes {
+            if let windowScene = scene as? UIWindowScene, scene.activationState == .foregroundActive {
+                if let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
+                    rootViewController = keyWindow.rootViewController
+                    break
+                }
+            }
+        }
+    }
+
+    if rootViewController == nil {
+        rootViewController = UIApplication.shared.delegate?.window??.rootViewController
+    }
+
+    if rootViewController == nil {
+        rootViewController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController
+    }
+
+    guard let finalRootVC = rootViewController else {
       result(FlutterError(code: "NO_ROOT_VIEW_CONTROLLER", message: "Could not find root view controller", details: nil))
       return
     }
 
-    var topController = rootViewController
+    var topController = finalRootVC
     while let presented = topController.presentedViewController {
         topController = presented
     }
