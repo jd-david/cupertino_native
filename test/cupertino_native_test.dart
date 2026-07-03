@@ -7,6 +7,14 @@ class MockCupertinoNativePlatform
     implements CupertinoNativePlatform {
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<CNAlertResult?> showAlert({
+    String? title,
+    String? message,
+    List<CNAlertAction> actions = const [],
+    List<CNAlertTextField> textFields = const [],
+  }) => Future.value(null);
 }
 
 void main() {

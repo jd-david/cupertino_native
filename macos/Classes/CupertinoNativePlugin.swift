@@ -33,6 +33,8 @@ public class CupertinoNativePlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "getPlatformVersion":
       result("macOS " + ProcessInfo.processInfo.operatingSystemVersionString)
+    case "showAlert":
+      result(FlutterError(code: "UNSUPPORTED_PLATFORM", message: "showAlert is only supported on iOS", details: nil))
     default:
       result(FlutterMethodNotImplemented)
     }
