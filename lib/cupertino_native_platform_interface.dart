@@ -1,6 +1,7 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'cupertino_native_method_channel.dart';
+import 'components/alert_models.dart';
 
 /// The platform interface that platform implementations of this plugin
 /// must extend.
@@ -28,5 +29,15 @@ abstract class CupertinoNativePlatform extends PlatformInterface {
   /// Retrieves a user-visible platform version string from the host platform.
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  /// Shows a native alert.
+  Future<CNAlertResult?> showAlert({
+    String? title,
+    String? message,
+    List<CNAlertAction> actions = const [],
+    List<CNAlertTextField> textFields = const [],
+  }) {
+    throw UnimplementedError('showAlert() has not been implemented.');
   }
 }
